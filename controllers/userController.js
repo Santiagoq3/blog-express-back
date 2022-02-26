@@ -106,7 +106,52 @@ const signIn = async(req,res)=>{
     
 }
 
+
+const getUsers = async(req,res)=>{
+
+        const users = await User.find()
+
+        if(!users){
+            res.status(404).json({
+                msg: "No se ha encontrado ningun usuario",
+                users
+            })
+        }else{
+
+            res.status(200).json({
+                msg: "get- getusers",
+                users
+            })
+
+        }
+    
+    
+}
+const getActiveUsers = async(req,res)=>{
+
+        const query = req.query.active
+        const users = await User.find({active: query})
+
+        if(!users){
+            res.status(404).json({
+                msg: "No se ha encontrado ningun usuario",
+                
+            })
+        }else{
+
+            res.status(200).json({
+                msg: "get- getusers",
+                users
+            })
+
+        }
+    
+    
+}
+
 module.exports = {
     signUp,
-    signIn
+    signIn,
+    getUsers,
+    getActiveUsers
 }
