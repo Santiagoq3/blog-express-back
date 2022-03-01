@@ -10,7 +10,10 @@ const UserSchema = Schema({
     },
     password: String,
     role: String,
-    active:Boolean
+    active:{
+        type: Boolean,
+        default: false
+    }
 });
 
 module.exports = model("User",UserSchema);

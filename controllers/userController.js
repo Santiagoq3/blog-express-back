@@ -149,9 +149,57 @@ const getActiveUsers = async(req,res)=>{
     
 }
 
+const uploadAvatar = (req,res)=>{
+
+    const params = req.params;
+
+    res.json({
+        
+    })
+}
+
+
+const updateUser = async(req,res)=>{
+
+    const userData = req.body;
+    const {id} = req.params;
+
+        if(userData.password){
+            const salt = bcrypt.genSaltSync(11);
+           userData.password = bcrypt.hashSync(userData.password,salt)
+        }
+
+       const result = await User.findByIdAndUpdate(id,userData)
+
+       if(!result){
+
+           return res.status(404).json({
+                ok: false,
+                msg: "Usuario no encontrado"
+            })
+       }else{
+
+          return res.status(200).json({
+              ok: true,
+              msg: "Usuario actualizado correctamente"
+           })
+       }
+   
+}
+
+const activateUser = (req,res)=>{
+
+    res.status(200).json({
+
+        msg: "activateuser"
+    })
+
+}
+
 module.exports = {
     signUp,
     signIn,
     getUsers,
-    getActiveUsers
+    getActiveUsers,
+    updateUser
 }
