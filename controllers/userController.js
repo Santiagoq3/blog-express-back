@@ -187,12 +187,27 @@ const updateUser = async(req,res)=>{
    
 }
 
-const activateUser = (req,res)=>{
+const activateUser = async(req,res)=>{
 
-    res.status(200).json({
+    const {id}  = req.params
 
-        msg: "activateuser"
-    })
+    const {active} = req.body;
+
+   const result = await User.findByIdAndUpdate(id,{active})
+
+   if(!result){
+
+        return res.status(404).json({
+            ok: false,
+            msg: "Usuario no encontrado"
+        })
+    }else{
+
+        return res.status(200).json({
+            ok: true,
+            msg: "Usuario desactivado correctamente"
+        })
+    }
 
 }
 
@@ -201,5 +216,6 @@ module.exports = {
     signIn,
     getUsers,
     getActiveUsers,
-    updateUser
+    updateUser,
+    activateUser
 }
